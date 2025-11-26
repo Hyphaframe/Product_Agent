@@ -1,6 +1,6 @@
 """
 反思节点
-对应原 ReflectionNode 和 ReflectionSummaryNode,负责反思搜索和更新总结
+负责反思搜索和更新总结
 """
 from typing import Dict, Any
 from datetime import datetime
@@ -8,18 +8,7 @@ from ..state import AgentState, SearchRecord
 from langgraph.types import RunnableConfig
 
 def reflection_search(state: AgentState, config: RunnableConfig) -> Dict[str, Any]:
-    """
-    执行反思搜索
 
-    对应原 DeepSearchAgent._reflection_loop() 中的搜索部分
-
-    Args:
-        state: 当前状态
-        config: 配置字典,包含 llm_client 和 tavily_api_key
-
-    Returns:
-        更新后的状态字典,包含新的搜索记录
-    """
     llm_client = config["configurable"]["llm_client"]
 
     from ...tools.search import tavily_search
@@ -78,18 +67,7 @@ def reflection_search(state: AgentState, config: RunnableConfig) -> Dict[str, An
     # return state
 
 def reflection_summary(state: AgentState, config: RunnableConfig) -> Dict[str, Any]:
-    """
-    更新反思后的总结
 
-    对应原 DeepSearchAgent._reflection_loop() 中的总结更新部分
-
-    Args:
-        state: 当前状态
-        config: 配置字典,包含 llm_client
-
-    Returns:
-        更新后的状态字典,包含更新后的段落内容
-    """
     llm_client = config["configurable"]["llm_client"]
 
     from ...utils.text_processing import format_search_results_for_prompt

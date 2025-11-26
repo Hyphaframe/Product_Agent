@@ -4,7 +4,9 @@ LLM调用模块
 """
 
 from .base import BaseLLM
-from .deepseek import DeepSeekLLM
+# from .deepseek import DeepSeekLLM
 from .openai_llm import OpenAILLM
 
-__all__ = ["BaseLLM", "DeepSeekLLM", "OpenAILLM"]
+# __all__ = ["BaseLLM", "DeepSeekLLM", "OpenAILLM"]
+
+__all__ = ["BaseLLM",  "OpenAILLM"]

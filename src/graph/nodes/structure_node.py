@@ -1,24 +1,13 @@
 """
 结构生成节点
-对应原 ReportStructureNode,负责生成报告大纲和段落结构
+负责生成报告大纲和段落结构
 """
 from typing import Dict, Any
 from ..state import AgentState, ParagraphState
 from langgraph.types import RunnableConfig
 
 def generate_structure(state: AgentState, config: RunnableConfig) -> Dict[str, Any]:
-    """
-    生成报告结构
 
-    对应原 DeepSearchAgent._generate_report_structure() 的功能
-
-    Args:
-        state: 当前状态,包含用户查询
-        config: 配置字典,通过 configurable 传递 llm_client
-
-    Returns:
-        包含 report_title 和 paragraphs 的状态更新字典
-    """
     llm_client = config["configurable"]["llm_client"]
     query = state["query"]
 
@@ -34,7 +23,7 @@ def generate_structure(state: AgentState, config: RunnableConfig) -> Dict[str, A
         {"role": "user", "content": user_content}
     ]
 
-    # 定义 JSON Schema(与原项目保持一致)
+    # 定义 JSON Schema
     json_schema = {
         "type": "object",
         "properties": {
@@ -54,7 +43,7 @@ def generate_structure(state: AgentState, config: RunnableConfig) -> Dict[str, A
         "required": ["report_title", "paragraphs"]
     }
 
-    # 调用 LLM(使用原项目的 BaseLLM.chat 接口)
+    # 调用 LLM
     result = llm_client.chat(messages, json_schema=json_schema)
 
     # 构建段落状态列表

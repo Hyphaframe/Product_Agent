@@ -16,14 +16,7 @@ from .nodes import (
 
 
 def should_reflect(state: AgentState) -> Literal["reflect", "next_paragraph", "format"]:
-    """
-    条件路由函数:决定是否继续反思
 
-    Returns:
-        - "reflect": 继续反思循环
-        - "next_paragraph": 进入下一段落
-        - "format": 所有段落完成,格式化报告
-    """
     current_idx = state["current_paragraph_index"]
     current_paragraph = state["paragraphs"][current_idx]
 

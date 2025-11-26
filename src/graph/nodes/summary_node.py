@@ -1,6 +1,6 @@
 """
 总结节点
-对应原 FirstSummaryNode,负责基于搜索结果生成段落总结
+负责基于搜索结果生成段落总结
 """
 from typing import Dict, Any
 from ..state import AgentState
@@ -8,21 +8,10 @@ from langgraph.types import RunnableConfig
 
 
 def initial_summary(state: AgentState, config: RunnableConfig) -> Dict[str, Any]:
-    """
-    生成初始总结
 
-    对应原 DeepSearchAgent._initial_search_and_summary() 中的总结部分
-
-    Args:
-        state: 当前状态
-        config: 配置字典,包含 llm_client
-
-    Returns:
-        更新后的状态字典,包含段落内容和最新总结
-    """
     llm_client = config["configurable"]["llm_client"]
 
-    # 导入文本处理工具(从原项目复用)
+    # 导入文本处理工具
     from ...utils.text_processing import format_search_results_for_prompt
 
     current_idx = state["current_paragraph_index"]
@@ -34,7 +23,7 @@ def initial_summary(state: AgentState, config: RunnableConfig) -> Dict[str, Any]
 
     latest_search = current_paragraph["search_history"][-1]
 
-    # 格式化搜索结果(使用原项目的工具函数)
+    # 格式化搜索结果
     formatted_results = format_search_results_for_prompt(
         latest_search["results"],
         max_length=config["configurable"].get("max_content_length", 20000)

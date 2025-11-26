@@ -1,6 +1,6 @@
 """
 初始搜索节点
-对应原 FirstSearchNode,负责生成搜索查询并执行搜索
+负责生成搜索查询并执行搜索
 """
 from typing import Dict, Any
 from datetime import datetime
@@ -8,21 +8,10 @@ from ..state import AgentState, SearchRecord
 from langgraph.types import RunnableConfig
 
 def initial_search(state: AgentState, config: RunnableConfig) -> Dict[str, Any]:
-    """
-    执行初始搜索
 
-    对应原 DeepSearchAgent._initial_search_and_summary() 中的搜索部分
-
-    Args:
-        state: 当前状态
-        config: 配置字典,包含 llm_client 和 search_tool
-
-    Returns:
-        更新后的状态字典,包含搜索历史
-    """
     llm_client = config["configurable"]["llm_client"]
 
-    # 获取 Tavily 搜索工具(从原项目复用)
+    # 获取 Tavily 搜索工具
     from ...tools.search import tavily_search
 
     current_idx = state["current_paragraph_index"]

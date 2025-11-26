@@ -1,24 +1,13 @@
 """
 报告格式化节点
-对应原 ReportFormattingNode,负责将所有段落整合为最终的 Markdown 报告
+负责将所有段落整合为最终的 Markdown 报告
 """
 from typing import Dict, Any
 from ..state import AgentState
 from langgraph.types import RunnableConfig
 
 def format_report(state: AgentState, config: RunnableConfig) -> Dict[str, Any]:
-    """
-    格式化最终报告
-
-    对应原 DeepSearchAgent._generate_final_report() 的功能
-
-    Args:
-        state: 当前状态,包含所有段落的最终内容
-        config: 配置字典,包含 llm_client
-
-    Returns:
-        更新后的状态字典,包含 final_report 和 completed 标志
-    """
+    
     llm_client = config["configurable"]["llm_client"]
 
     from ...prompts.prompts import SYSTEM_PROMPT_REPORT_FORMATTING
