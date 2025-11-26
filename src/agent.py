@@ -6,6 +6,7 @@ Deep Search Agent主类 - LangGraph版本
 import json
 import os
 from datetime import datetime
+import time
 from typing import Optional, Dict, Any
 
 from .llms import DeepSeekLLM, OpenAILLM, BaseLLM
@@ -52,6 +53,7 @@ class DeepSearchAgent:
 
 
     from typing import Generator, Dict, Any, Optional   # 引入生成器类型提示
+    import time
 
     def research(
         self,
@@ -72,6 +74,7 @@ class DeepSearchAgent:
             {"node": 节点名, "state": 当前状态快照}
             最后一条为 {"node": "completed", "report": 最终报告}
         """
+        start_time = time.time()
         print(f"\n{'='*60}\n开始深度研究: {query}\n{'='*60}")
 
         try:
@@ -124,8 +127,11 @@ class DeepSearchAgent:
             if save_report:
                 self._save_report(final_report, query)
 
+            end_time = time.time()
+            run_time = end_time - start_time
             print("\n深度研究完成！")
-            yield {"node": "completed", "report": final_report}
+            print(f"总用时: {run_time:.2f} 秒")
+            yield {"node": "completed", "report": final_report, "run_time": run_time}
 
         except Exception as e:
             print(f"[research] 研究过程中发生错误: {e}")

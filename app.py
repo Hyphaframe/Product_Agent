@@ -197,6 +197,8 @@ def main():
                 st.header("📊 研究结果")
                 tab1, tab2 = st.tabs(["📄 最终报告", "💾 下载"])
                 with tab1:
+                    st.subheader("⏱️ 运行统计")  
+                    st.metric("运行时间", f"{progress_data['run_time']:.2f} 秒")
                     st.markdown(final_report)
                 with tab2:
                     st.download_button(
